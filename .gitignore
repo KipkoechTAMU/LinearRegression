@@ -1,0 +1,21 @@
+# Data files
+*.csv
+hw1_data_test.csv
+hw1_data_train.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.soS
+.Python
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
