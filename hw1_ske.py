@@ -37,7 +37,13 @@ class DataProcessor:
             Tuple containing training and test dataframes
         """
         # TODO: Implement data loading
-        
+        train_path = f"{self.data_root}/hw1_data_train.csv"
+        test_path = f"{self.data_root}/hw1_data_test.csv"
+
+        train_data = pd.read_csv(train_path)
+        test_data = pd.read_csv(test_path)
+        return train_data, test_data
+    
     def check_missing_values(self, data: pd.DataFrame) -> int:
         """Count number of missing values in dataset.
         
@@ -47,7 +53,11 @@ class DataProcessor:
         Returns:
             Number of missing values
         """
-        # TODO: Implement missing value check
+        missing_per_column = data.isnull().sum()
+
+        total_missing = missing_per_column.sum()
+
+        return total_missing
         
     def clean_data(self, data: pd.DataFrame) -> pd.DataFrame:
         """Remove rows with missing values.
@@ -58,7 +68,13 @@ class DataProcessor:
         Returns:
             Cleaned dataframe
         """
-        # TODO: Implement data cleaning
+        initial_rows = len(data)
+        cleaned_data = data.dropna()
+        # Report how many rows were removed
+        removed_rows = initial_rows - len(cleaned_data)
+        print(f"Removed {removed_rows} rows with missing values")
+        print(f"Remaining: {len(cleaned_data)} rows")
+        return cleaned_data
         
     def extract_features_labels(self, data: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         """Extract features and labels from dataframe, convert to numpy arrays.
@@ -69,7 +85,13 @@ class DataProcessor:
         Returns:
             Tuple of feature matrix X and label vector y
         """
-        # TODO: Implement feature/label extraction
+        X = data.drop('PT08.S1(CO)', axis=1).values
+
+        y = data['PT08.S1(CO)'].values
+
+        print(f"Features shape: {X.shape}")
+        print(f"Labels shape: {y.shape}")
+        return X,y
     
 class LinearRegression:
     def __init__(self):
@@ -252,4 +274,8 @@ class ModelEvaluator:
         # TODO: Implement cross-validation
 
 if __name__ == "__main__":
-    print("Hello World!")
+    processor = DataProcessor(data_root=".")
+    
+    # Load data
+    print("=== Hello ===")
+    
